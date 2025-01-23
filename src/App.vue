@@ -18,8 +18,8 @@ export default defineComponent({
     GameComponent,
   },
   setup() {
-    const gameInProgress = ref<boolean>(false);
-    const gameSize = ref<number>(1);
+    const gameInProgress = ref<boolean>(true);
+    const gameSize = ref<number>(12);
 
     const startGame = (newGameSize: number): void => {
       gameSize.value = newGameSize;

@@ -15,3 +15,15 @@
   display: flex;
   gap: 2rem;
 }
+
+.score-board div {
+  padding: 3rem 4rem;
+}
+
+.blue-turn {
+  background-color: #5a85f7;
+}
+
+.red-turn {
+  background-color: #ff4d4f;
+}
