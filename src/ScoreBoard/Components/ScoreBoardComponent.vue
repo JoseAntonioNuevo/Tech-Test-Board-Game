@@ -1,20 +1,17 @@
 <template>
   <div>
-    <ScoreBoardComponent :gameSize="gameSize" @exit-game="exitGame" />
+    <h1>Playing with size: {{ gameSize }}</h1>
+    <button @click="exitGame" class="exit-btn">Exit</button>
   </div>
 </template>
 
 <script lang="ts">
-import "../Assets/Css/Game.css";
-import ScoreBoardComponent from "../../ScoreBoard/Components/ScoreBoardComponent.vue";
+import "../Assets/Css/ScoreBoard.css";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "GameComponent",
+  name: "ScoreBoardComponent",
   emits: ["exit-game"],
-  components: {
-    ScoreBoardComponent,
-  },
   props: {
     gameSize: {
       type: Number,
@@ -25,7 +22,11 @@ export default defineComponent({
     const exitGame = (): void => {
       emit("exit-game");
     };
-    return { exitGame };
+
+    return {
+      exitGame,
+      gameSize: props.gameSize,
+    };
   },
 });
 </script>
