@@ -1,13 +1,19 @@
 <template>
   <div>
-    <ScoreBoardComponent :gameSize="gameSize" @exit-game="exitGame" />
+    <ScoreBoardComponent
+      @exit-game="exitGame"
+      @restart-game="restartGame"
+      :gameSize="gameSize"
+      :bluePlayerScore="bluePlayerScore"
+      :redPlayerScore="redPlayerScore"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import "../Assets/Css/Game.css";
 import ScoreBoardComponent from "../../ScoreBoard/Components/ScoreBoardComponent.vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "GameComponent",
@@ -22,10 +28,19 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const bluePlayerScore = ref<number>(0);
+    const redPlayerScore = ref<number>(0);
+
     const exitGame = (): void => {
       emit("exit-game");
     };
-    return { exitGame };
+
+    const restartGame = (): void => {
+      bluePlayerScore.value = 0;
+      redPlayerScore.value = 0;
+    };
+
+    return { bluePlayerScore, redPlayerScore, exitGame, restartGame };
   },
 });
 </script>
