@@ -1,0 +1,30 @@
+.game-size-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.game-size-form input {
+  min-height: 2rem;
+  min-width: 8rem;
+  border-radius: 2rem;
+  border: none;
+  padding: 0.5rem 2rem;
+  text-align: center;
+}
+
+.error {
+  color: #ff4d4f;
+}
+
+@media (max-width: 768px) {
+  .game-size-form input {
+    min-width: 100%;
+  }
+
+  .game-size-form button {
+    width: 100%;
+  }
+}
