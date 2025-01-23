@@ -1,5 +1,5 @@
 <template>
-  <div class="hello-world">
+  <div>
     <h1>Welcome to The Tech Test Board Game</h1>
     <h2>Choose The Game Size</h2>
     <div class="game-size-form">

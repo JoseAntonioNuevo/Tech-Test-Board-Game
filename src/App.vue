@@ -2,8 +2,7 @@
   <div id="app">
     <InitialPage v-if="!gameInProgress" @start-game="startGame" />
     <div v-else>
-      <p>Game is in progress...</p>
-      <button @click="exitGame">Exit</button>
+      <GameComponent @exit-game="exitGame" :gameSize="gameSize" />
     </div>
   </div>
 </template>
@@ -11,10 +10,12 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import InitialPage from "./InitialPage/Components/InitialPage.vue";
+import GameComponent from "./Game/Components/GameComponent.vue";
 
 export default defineComponent({
   components: {
     InitialPage,
+    GameComponent,
   },
   setup() {
     const gameInProgress = ref<boolean>(false);
@@ -32,6 +33,7 @@ export default defineComponent({
 
     return {
       gameInProgress,
+      gameSize,
       startGame,
       exitGame,
     };

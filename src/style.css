@@ -65,6 +65,15 @@ button:focus-visible {
   text-align: center;
 }
 
+.error-btn,
+.exit-btn {
+  background-color: #ff4d4d;
+}
+
+.error {
+  color: #ff4d4f;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
