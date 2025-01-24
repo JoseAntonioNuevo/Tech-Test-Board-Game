@@ -1,11 +1,11 @@
 {
-  "name": "smatpoint-game-test",
+  "name": "smartpoint-game-test",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "vue-tsc -b && vite build",
+    "start": "vite build && npx serve -s dist",
     "preview": "vite preview",
     "test": "jest"
   },
@@ -21,6 +21,7 @@
     "babel-jest": "^27.5.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "serve": "^14.2.4",
     "typescript": "~5.6.2",
     "vite": "^6.0.5",
     "vue-tsc": "^2.2.0",

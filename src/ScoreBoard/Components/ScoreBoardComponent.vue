@@ -46,7 +46,7 @@ export default defineComponent({
       required: false,
     },
     winner: {
-      type: Number,
+      type: Number | null,
       required: false,
       default: null,
     },
