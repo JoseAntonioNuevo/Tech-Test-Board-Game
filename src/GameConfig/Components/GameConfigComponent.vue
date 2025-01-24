@@ -33,8 +33,8 @@ export default defineComponent({
 
     const setGameSize = (e: Event): void => {
       const target = e.target as HTMLInputElement;
-      const value = target.value ? parseInt(target.value) : 1;
-      gameSize.value = value;
+      const value = target.value ? parseInt(target.value) : NaN;
+      gameSize.value = isNaN(value) ? 0 : value;
     };
 
     const CheckGameSize = (value: number): number => {
