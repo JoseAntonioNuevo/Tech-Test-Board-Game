@@ -17,7 +17,7 @@
     <div class="board-game">
       <div class="board-row">
         <div
-          v-for="(col, colIndex) in board"
+          v-for="colIndex in board"
           @click="playTurn(colIndex)"
           :key="colIndex"
           :class="getCellClass(colIndex)"
@@ -46,7 +46,7 @@ export default defineComponent({
   setup(props, { emit }) {
     // 1: Blue, 2: Red
     const playerTurn = ref<number>(1);
-    const winner = ref<number | null>(null);
+    const winner = ref<number | undefined>(undefined);
     const gameSize = ref<number>(props.initialGameSize ?? 4);
 
     const board = ref<number[]>(Array(props.initialGameSize).fill(0));
@@ -81,7 +81,7 @@ export default defineComponent({
 
     const restartGame = (size: number): void => {
       board.value = Array(size).fill(0);
-      winner.value = null;
+      winner.value = undefined;
       gameSize.value = size;
       startGame();
     };

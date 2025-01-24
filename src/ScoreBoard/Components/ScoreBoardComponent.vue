@@ -20,7 +20,7 @@
 <script lang="ts">
 import "../Assets/Css/ScoreBoard.css";
 import GameConfigComponent from "../../GameConfig/Components/GameConfigComponent.vue";
-import { defineComponent, ref, onMounted, onUnmounted, watch } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "ScoreBoardComponent",
@@ -48,6 +48,7 @@ export default defineComponent({
     winner: {
       type: Number,
       required: false,
+      default: null,
     },
   },
 
