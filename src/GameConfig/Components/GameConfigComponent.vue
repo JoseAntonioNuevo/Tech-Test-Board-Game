@@ -32,6 +32,7 @@ export default defineComponent({
     const error = ref<string>("");
 
     const setGameSize = (e: Event): void => {
+      error.value = "";
       const target = e.target as HTMLInputElement;
       const value = target.value ? parseInt(target.value) : NaN;
       gameSize.value = isNaN(value) ? 0 : value;
