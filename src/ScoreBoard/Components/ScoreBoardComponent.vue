@@ -1,18 +1,16 @@
 <template>
   <div class="score-board">
-    <div :class="playerTurn === 1 ? 'blue-turn' : ''">
+    <div :class="winner || playerTurn === 1 ? 'blue-turn' : ''">
       <h3>Player Blue</h3>
       <h2>{{ bluePlayerScore }}</h2>
     </div>
     <div>
-      <h4>Playing with size: {{ gameSize }}</h4>
-      <p>{{ timer }}</p>
-      <div class="score-board-buttons">
-        <button @click="restartGame">Restart</button>
-        <button @click="exitGame" class="exit-btn">Exit</button>
-      </div>
+      <GameConfigComponent
+        @start-game="restartGame"
+        :initialGameSize="gameSize"
+      />
     </div>
-    <div :class="playerTurn === 2 ? 'red-turn' : ''">
+    <div :class="winner || playerTurn === 2 ? 'red-turn' : ''">
       <h3>Player Red</h3>
       <h2>{{ redPlayerScore }}</h2>
     </div>
@@ -21,13 +19,17 @@
 
 <script lang="ts">
 import "../Assets/Css/ScoreBoard.css";
-import { defineComponent, ref, onMounted, onUnmounted } from "vue";
+import GameConfigComponent from "../../GameConfig/Components/GameConfigComponent.vue";
+import { defineComponent, ref, onMounted, onUnmounted, watch } from "vue";
 
 export default defineComponent({
   name: "ScoreBoardComponent",
-  emits: ["exit-game", "restart-game"],
+  components: {
+    GameConfigComponent,
+  },
+  emits: ["restart-game"],
   props: {
-    gameSize: {
+    initialGameSize: {
       type: Number,
       required: true,
     },
@@ -43,38 +45,22 @@ export default defineComponent({
       type: Number,
       required: false,
     },
+    winner: {
+      type: Number,
+      required: false,
+    },
   },
 
   setup(props, { emit }) {
-    const timer = ref(0);
-    let interval: number;
+    const gameSize = ref<number>(props.initialGameSize);
 
-    const startTimer = (): void => {
-      interval = setInterval(() => {
-        timer.value++;
-      }, 1000);
+    const restartGame = (size: number): void => {
+      gameSize.value = size;
+      emit("restart-game", size);
     };
-
-    const exitGame = (): void => {
-      emit("exit-game");
-    };
-
-    const restartGame = (): void => {
-      emit("restart-game");
-      timer.value = 0; // Reset the timer when the game restarts
-    };
-
-    onMounted(() => {
-      startTimer();
-    });
-
-    onUnmounted(() => {
-      clearInterval(interval);
-    });
 
     return {
-      timer,
-      exitGame,
+      gameSize,
       restartGame,
     };
   },

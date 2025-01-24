@@ -1,66 +1,67 @@
 <template>
   <div>
-    <h1>Welcome to The Tech Test Board Game</h1>
-    <h2>Choose The Game Size</h2>
-    <div class="game-size-form">
+    <form @submit.prevent="startGame" class="game-size-form">
       <input
         @input="setGameSize($event)"
         type="number"
         name="game-size"
         id="game-size"
-        min="1"
-        max="25"
         v-model.number="gameSize"
       />
-      <button @click="startGame">Start</button>
-    </div>
+      <button>Start</button>
+    </form>
     <p v-if="error" class="error">{{ error }}</p>
   </div>
 </template>
 
 <script lang="ts">
-import "../Assets/Css/InitialPage.css";
+import "../Assets/Css/GameConfig.css";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: "InitialComponent",
+  name: "GameConfigComponent",
+  props: {
+    initialGameSize: {
+      type: Number,
+      required: false,
+    },
+  },
   emits: ["start-game"],
-  setup(_, { emit }) {
-    const gameSize = ref<number>(1);
+  setup(props, { emit }) {
+    const gameSize = ref<number>(props.initialGameSize ?? 4);
     const error = ref<string>("");
 
     const setGameSize = (e: Event): void => {
       const target = e.target as HTMLInputElement;
       const value = target.value ? parseInt(target.value) : 1;
-      CheckGameSize(value);
+      gameSize.value = value;
     };
 
-    const CheckGameSize = (value: number): boolean => {
-      const maxSize = 25;
-      const minSize = 1;
+    const CheckGameSize = (value: number): number => {
+      const maxSize = 50;
+      const minSize = 4;
 
       if (value > maxSize) {
         gameSize.value = maxSize;
         error.value = `The maximum game size is ${maxSize}.`;
-        return false;
+        return maxSize;
       }
       if (value < minSize) {
         gameSize.value = minSize;
         error.value = `The minimum game size is ${minSize}.`;
-        return false;
+        return minSize;
       }
 
       gameSize.value = value;
       error.value = "";
-      return true;
+      return value;
     };
 
-    const startGame = (): void => {
-      if (CheckGameSize(gameSize.value)) {
-        emit("start-game", gameSize.value);
-        return;
-      }
-      error.value = "Please enter a valid game size.";
+    const startGame = (e: Event): void => {
+      e.preventDefault();
+      const size = CheckGameSize(gameSize.value);
+      if (error.value) return;
+      emit("start-game", size);
     };
 
     return {
