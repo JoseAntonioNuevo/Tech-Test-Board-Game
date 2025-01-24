@@ -166,6 +166,7 @@ export default defineComponent({
       playTurn,
       getCellClass,
       checkWinner,
+      startGame,
     };
   },
 });
