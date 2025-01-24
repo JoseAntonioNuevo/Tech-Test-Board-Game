@@ -4,8 +4,8 @@
       @exit-game="exitGame"
       @restart-game="restartGame"
       :gameSize="gameSize"
-      :bluePlayerScore="bluePlayerScore"
-      :redPlayerScore="redPlayerScore"
+      :bluePlayerScore="blueBoard.length"
+      :redPlayerScore="redBoard.length"
       :playerTurn="playerTurn"
     />
     <div class="board-game">
@@ -39,9 +39,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const bluePlayerScore = ref<number>(0);
-    const redPlayerScore = ref<number>(0);
-    const playerTurn = ref<number>(0);
+    // Turn 1: Blue, Turn 2: Red
+    const playerTurn = ref<number>(1);
     const blueBoard = ref<number[]>([]);
     const redBoard = ref<number[]>([]);
 
@@ -59,7 +58,7 @@ export default defineComponent({
       let alreadySet: Set<number> = new Set();
 
       while (alreadySet.size < redCells + blueCells) {
-        const col = Math.floor(Math.random() * size) + 1;
+        const col = Math.floor(Math.random() * size);
         if (!alreadySet.has(col)) {
           if (blueBoard.value.length < blueCells) {
             blueBoard.value.push(col);
@@ -78,16 +77,27 @@ export default defineComponent({
     };
 
     const restartGame = (): void => {
-      bluePlayerScore.value = 0;
-      redPlayerScore.value = 0;
       board.value = Array.from({ length: props.gameSize }, () =>
         Array(props.gameSize).fill(0)
       );
+      blueBoard.value = [];
+      redBoard.value = [];
       initializeBoard();
     };
 
     const cellClicked = (col: number): void => {
-      console.log(col);
+      console.log(playerTurn.value);
+      if (playerTurn.value === 1) {
+        if (!blueBoard.value.includes(col) && !redBoard.value.includes(col)) {
+          blueBoard.value.push(col);
+          playerTurn.value = 2;
+        }
+      } else {
+        if (!blueBoard.value.includes(col) && !redBoard.value.includes(col)) {
+          redBoard.value.push(col);
+          playerTurn.value = 1;
+        }
+      }
     };
 
     const getCellClass = (colIndex: number): string => {
@@ -103,10 +113,10 @@ export default defineComponent({
     initializeBoard();
 
     return {
-      bluePlayerScore,
-      redPlayerScore,
       playerTurn,
       board,
+      blueBoard,
+      redBoard,
       exitGame,
       restartGame,
       cellClicked,

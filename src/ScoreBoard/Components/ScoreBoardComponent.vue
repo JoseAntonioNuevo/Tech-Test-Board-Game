@@ -1,6 +1,6 @@
 <template>
   <div class="score-board">
-    <div :class="playerTurn !== 1 ? 'blue-turn' : ''">
+    <div :class="playerTurn === 1 ? 'blue-turn' : ''">
       <h3>Player Blue</h3>
       <h2>{{ bluePlayerScore }}</h2>
     </div>
@@ -12,7 +12,7 @@
         <button @click="exitGame" class="exit-btn">Exit</button>
       </div>
     </div>
-    <div :class="playerTurn === 1 ? 'red-turn' : ''">
+    <div :class="playerTurn === 2 ? 'red-turn' : ''">
       <h3>Player Red</h3>
       <h2>{{ redPlayerScore }}</h2>
     </div>
