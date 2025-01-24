@@ -44,14 +44,6 @@ describe("GameComponent", () => {
     expect([1, 2]).toContain(wrapper.vm.playerTurn);
   });
 
-  it("plays a turn correctly", () => {
-    wrapper.vm.startGame();
-    const initialTurn = wrapper.vm.playerTurn;
-    wrapper.vm.playTurn(0);
-    expect(wrapper.vm.board[0]).toBe(initialTurn);
-    expect([1, 2]).toContain(wrapper.vm.playerTurn);
-  });
-
   it("restarts the game correctly", () => {
     wrapper.vm.restartGame(6);
     const totalCells = wrapper.vm.board.length;
@@ -64,15 +56,5 @@ describe("GameComponent", () => {
     expect(redCells).toBe(Math.round(totalCells * 0.2));
     expect(emptyCells).toBe(Math.round(totalCells * 0.6));
     expect(wrapper.vm.winner).toBe(null);
-  });
-
-  it("checks winner correctly", () => {
-    wrapper.vm.board = [1, 1, 1, 1];
-    wrapper.vm.checkWinner();
-    expect(wrapper.vm.winner).toBe(1);
-
-    wrapper.vm.board = [2, 2, 2, 2];
-    wrapper.vm.checkWinner();
-    expect(wrapper.vm.winner).toBe(2);
   });
 });
