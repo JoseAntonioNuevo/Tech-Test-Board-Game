@@ -27,3 +27,14 @@
 .red-turn {
   background-color: #ff4d4f;
 }
+
+@media (max-width: 768px) {
+  .score-board {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .score-board div {
+    padding: 2rem;
+  }
+}
